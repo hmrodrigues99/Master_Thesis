@@ -1,28 +1,19 @@
+#This script overlaps the interactions in the network where TFs (transcription factors) are involved, and the TF target interactions deposited in a curated database (ConnecTF).
+#Inputs
+#1) Network node table and edge table from Cytoscape
+#2) ConnecTF database network
+#3) File with the homology link between Qs.suber genes and Ara.thaliana genes. 2 columns (ex: LOC123 AT123)
+
 library(dplyr)
 library(tidyr)
 
+#Piece of code used once to get the column with the Arabidopsis IDs into a condensed version
 #Passing column of AT1G123.1 genes to AT1G123
-df_node_at <- read.csv(file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/Cork_network04_TF_node.csv", header = TRUE, sep=",")
-
-df_node_at <- df_node_at[!apply(df_node_at, 1, function(x) any(x=="")),] 
-
-df_new_node_at <- df_node_at %>% separate(Arabidopsis_gene, c("Arabidopsis_concise", "temp"), remove = FALSE)
-
-df_new_node_at <- subset(df_new_node_at, select = c("name", "Arabidopsis_gene", "Arabidopsis_concise"))
-
-write.table(df_new_node_at, file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/arabidopsis_concise.txt", row.names = FALSE, quote = FALSE, sep = "\t")
-
-
-#Testing a single TF query in ConnecTF, getting the hit targets column (export target_genes from ConnectTF) ready for import in Cytoscape
-df_targets <- read.csv(file = "C:/Users/Hugo Rodrigues/Downloads/target_genes.txt", header = TRUE, col.names = "Arabidopsis_ID")
-
-vec_rep <- rep("yes", times=dim(df_targets)[[1]])
-
-df_targets["Target_of_AT1G75390"] <- vec_rep
-
-write.csv(df_targets, file = "C:/Users/Hugo Rodrigues/Documents/Hugo_Networks/DEG_Cork_SLOWP/DEG_Cork_SLOWP_network04_subset/DEG_Cork_SLOWP_network04_subset_targets.csv", row.names = FALSE, quote = FALSE)
-
-
+#df_node_at <- read.csv(file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/Cork_network04_TF_node.csv", header = TRUE, sep=",")
+#df_node_at <- df_node_at[!apply(df_node_at, 1, function(x) any(x=="")),] 
+#df_new_node_at <- df_node_at %>% separate(Arabidopsis_gene, c("Arabidopsis_concise", "temp"), remove = FALSE)
+#df_new_node_at <- subset(df_new_node_at, select = c("name", "Arabidopsis_gene", "Arabidopsis_concise"))
+#write.table(df_new_node_at, file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/arabidopsis_concise.txt", row.names = FALSE, quote = FALSE, sep = "\t")
 
 #Getting the Input Network ready to query in ConnectTF -> from "LOC edge LOC" to "AT edge AT" format
 #My Cork_network04 loaded into df_Cork_SLOWP_subset has a total of 17,006 edges.
@@ -188,6 +179,7 @@ df_Cork_SLOWP_subset_TF <- df_Cork_SLOWP_subset_TF %>% drop_na(EDGE_TYPE)
 
 write.table(df_Cork_SLOWP_subset_TF, file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/Cork_TF_Confirmed_edges.txt", sep = "\t", row.names = FALSE, quote = FALSE)
 
+#Not sure what this does as of now
 cytoscape_edge_vec <- c()
 for (i in 1:dim(df_Cork_SLOWP_subset_TF)[[1]]) {
   expression <- paste(df_Cork_SLOWP_subset_TF[i,1], " (interacts with) ", df_Cork_SLOWP_subset_TF[i,3], sep = "")
