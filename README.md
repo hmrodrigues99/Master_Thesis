@@ -64,5 +64,5 @@ The code pipeline is as follows:
 
 **script_to_do** #the commands were simple and done in the bash shell (prov_name:get_promoter_regions.sh) #Gets the promoter regions of all network genes
 
-**match_TFBS_promoter.sh** #Perform motif matching between a TF binding site and the promoter region of genes that are connected with that TF in the network
+**match_TFBS_promoter.sh** #Perform motif matching between a TF binding site and the promoter region of genes that are connected with that TF in the network. It incorporates **match_TFBS_promoter.py** to process input files.
 
