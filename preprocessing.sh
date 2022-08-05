@@ -1,6 +1,9 @@
 #!/bin/bash
 
-#This script receives a list of samples $1, the sufix for the first pair $2 and the sufix for the second pair in $3
+#This script receives a list of samples $1, the sufix for the first read pair $2 and the sufix for the second read pair in $3. The list of samples
+#should be one sample file per line. As output creates two new directories with the fastqc analysis results for the raw reads and for the filtered
+#reads after trimmomatic. A separate directory, /preprocessing/hq_reads, stores the filtered fastq files.
+#This script uses the log_reads.sh script to process the log output file to generate a trimmomatic_log.csv file.
 
 export PATH=$PATH:~/bin/FastQC # in server might be different
 export PATH=$PATH:~/data/scripts # path to the log_reads script
