@@ -6,28 +6,21 @@ export PATH=$PATH:~/data/scripts
 usage()
 {
 cat << EOF
-
 usage $0 <options>
-
 A TF-Target Validator based on TFBS (transcription factor binding sites) being present on the promoter region sequences of their putative targets
-
 OPTION
  -h	show this Help message
  -n	path to file containing the Co-expression network (delimiter=" ")
  -p	path to file containing the promoter sequences of all genes
- -t	string with the TF ID (ex: LOC1234) from Quercus suber
+ -t	string with the TF ID (ex: LOC1234) from Quercus suber; a list of one TF per line is also accepted
  -v	minimum pvalue to establish a valid match in FIMO (default = 1.0E-4
  -o	output directory name (default = TF_Targets_match)
-
 DETAILS
-
 This script receives as input: 1)The co-expression network (3 mandatory columns: LOC1 | LOC2 | edge_score/irp_score); 2)The table with the gene promoter sequences (2 mandatory columns: Gene | Sequence); 3)A list with TF IDs (ex:LOC123 OR AT123).
 It creates a output directory with severall output files, one of which is a table with 2 columns: TF | Validated Target
 The TF putative targets are the genes that the TF is linked to by an edge in the network, and the validation conducted in this script is a check using FIMO (MEME Suite) of a motif match between the TFBS (transcription factor binding site) and the promoter sequences of its putative targets.
-
 I conducted my work using this script with the following input files: --network Cork_network.txt --promoter_sequences Promoter_sequences_df.csv --TF [relevant TFs from the previous TF_analysis step] --TFBS_matrix TFBS_TF_[relevant TF LOCs]_fasta.fa
 I stored my output tables into ...
-
 EOF
 }
 
@@ -139,24 +132,42 @@ do
 		fimo --oc ./$outdir/fimo_${f} --verbosity 1 --thresh $pvalue ./$outdir/$at_tf.meme ./$outdir/TFBS_TF_${f}_fasta.fa
 
 		printf "\n  |  Printing all matching targets of the TF ${f}                  | \n"
-		#cat ./$outdir/fimo_${f}/fimo.gff | awk '{print $1,$6}' > ./$outdir/motif_match_${f}.txt
-		cat ./$outdir/fimo_${f}/fimo.gff | awk '{print $1}' > ./$outdir/motif_match_${f}.txt
-        	awk -F' ' '!a[$1]++' ./$outdir/motif_match_${f}.txt > ./$outdir/best_motif_match_${f}.txt
+		cat ./$outdir/fimo_${f}/fimo.gff | awk '{print $1,$6}' > ./$outdir/motif_match_${f}.txt
+		#cat ./$outdir/fimo_${f}/fimo.gff | awk '{print $1}' > ./$outdir/motif_match_${f}.txt
+        	awk -F' ' '!a[$1]++' ./$outdir/motif_match_${f}.txt > ./$outdir/best_motif_match_with_score_${f}.txt
+		rm ./$outdir/motif_match_${f}.txt
+		sed 's/ .*//g' ./$outdir/best_motif_match_with_score_${f}.txt > ./$outdir/best_motif_match_without_score_${f}.txt
 	else
-		printf "${f}	NO_TFBS\n" > ./$outdir/TF_${f}_target_list.txt
-		printf "${f}	NO_TFBS\n" > ./$outdir/TF_${f}_matches.txt
-		NO_TFBS=TRUE
+		printf "${f}	NO_TFBS\n" >> ./$outdir/TFs_with_NO_TFBS.txt
+		#printf "${f}	NO_TFBS\n" >> ./$outdir/ALL_TF_Matches_Output.txt
+
 	fi
 
 	#Starts building the Output File Table based on the FIMO results. YES - match | NO - no match | NO_TFBS - no TFBS found
-	while read target
-	do
-		if grep -Fxq "$target" ./$outdir/best_motif_match_${f}.txt
-		then
-			printf "${target}	YES\n" >> ./$outdir/TF_${f}_matches.txt
-		else
-			printf "${target}	NO\n" >> ./$outdir/TF_${f}_matches.txt
-		fi
-	done < ./$outdir/TF_${f}_target_list.txt	
+	FILE=./$outdir/TF_${f}_target_list.txt
+	if [ -f "$FILE" ]; then		
+		while read target
+		do
+			if grep -Fxq "$target" ./$outdir/best_motif_match_without_score_${f}.txt
+			then
+				#printf "${f}	${target}	YES\n" >> ./$outdir/TF_${f}_matches.txt
+				grep "$target" ./$outdir/best_motif_match_with_score_${f}.txt > ./$outdir/fimo_score_prov.txt
+				sed 's/.* //g' ./$outdir/fimo_score_prov.txt > ./$outdir/fimo_score.txt
+				fimo_score=$(<./$outdir/fimo_score.txt)
+				rm ./$outdir/fimo_score_prov.txt
+				rm ./$outdir/fimo_score.txt
+				printf "${f}	${target}	YES_${fimo_score}\n" >> ./$outdir/ALL_TF_Matches_Output.txt
+			else
+				#printf "${f}	${target}	NO\n" >> ./$outdir/TF_${f}_matches.txt
+				printf "${f}	${target}	NO\n" >> ./$outdir/ALL_TF_Matches_Output.txt
+			fi
+		done < ./$outdir/TF_${f}_target_list.txt
+		#Removing leftover temporary files; comment to keep the files inside output directory
+		rm ./$outdir/TF_${f}_target_list.txt
+		rm ./$outdir/best_motif_match_with_score_${f}.txt
+		rm ./$outdir/best_motif_match_without_score_${f}.txt
+		rm ./$outdir/$at_tf.meme
+		rm ./$outdir/TFBS_TF_${f}_fasta.fa
+		rm -r ./$outdir/fimo_${f}
+	fi
 done < $tf
-
