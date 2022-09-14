@@ -329,7 +329,7 @@ sed 's/;/\t/g' cyto1_network.txt > cyto2_network.txt
 #To discard the NC_Scores use:
 #awk '{print $1,$2,$(NF-3)}' cyto2_network.txt > cyto3_network.txt
 #To keep the NC_Scores use:
-awk '{print $1,$2,$(NF-1),$(NF)}' cyto2_network.txt > $PWD/$outdir/${outdir}_network.txt
+awk '{print $1,$2,$(NF-3),$(NF-1),$(NF)}' cyto2_network.txt > $PWD/$outdir/${outdir}_network.txt
 
 #Applying a cutoof to the network score with network_cut.py if -cutoof value is specified
 if [ $cutoff != 'None' ]; then network_cut.py --network $PWD/$outdir/${outdir}_network.txt --cutoff $cutoof --method ${aggregate}_score --out $PWD/$outdir/${outdir}_network_${cutoof}.txt; fi
@@ -393,8 +393,5 @@ fi
 
 #This python script applies a cutoof to the network by their correlation scores if specified
 #if [ "$cutoof"  != "None" ]; then network_cut.py --network cork_cor_scores_mean.txt --cutoff $cutoof --out cork_cor_scores_mean_cut.txt; else echo "Applying  #no cutoff to the correlation scores"; fi
-
-#TO DO SECTION - automatic import ot Cytoscape to allow visualization of the obtained network
-#remove all files with the exception of the network (cork_cyto_network.txt or cork_cyto_cut_network.txt) and (cork_cor_scores_mean or cork_cor_scores_cut_mean)
 
 printf "\n\n | -------------------------- END OF SEIDR_SCRIPT ----------------------------- |\n"
