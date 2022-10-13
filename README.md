@@ -64,7 +64,7 @@ The code pipeline is as follows:
 
 **get_All_promoter_sequences.sh** #Gets the promoter regions of all cork oak genes
 
-**get_Promoter_sequence_df.py** #Makes a table with scaffold, gene and promoter region collumns of cork oak genes present in the GCN
+**get_Promoter_sequence_df.py** #Makes a table with scaffold, gene and promoter region columns of cork oak genes present in the network
 
-**match_TFBS_promoter.sh** #Perform motif matching between a TF binding site and the promoter region of genes that are connected with that TF in the network. It incorporates **match_TFBS_promoter.py** to process input files.
+**match_TFBS_promoter.sh** #Perform motif matching between a TF binding site and the promoter region of genes that are connected with that TF in the network. It incorporates **match_TFBS_promoter.py** to process input files
 
