@@ -62,7 +62,9 @@ The code pipeline is as follows:
 
 **tf_target_information.py** #Summarize information of network TFs and the genes which they interact with
 
-**script_to_do** #the commands were simple and done in the bash shell (prov_name:get_promoter_regions.sh) #Gets the promoter regions of all network genes
+**get_All_promoter_sequences.sh** #Gets the promoter regions of all cork oak genes
+
+**get_Promoter_sequence_df.py** #Makes a table with scaffold, gene and promoter region collumns of cork oak genes present in the GCN
 
 **match_TFBS_promoter.sh** #Perform motif matching between a TF binding site and the promoter region of genes that are connected with that TF in the network. It incorporates **match_TFBS_promoter.py** to process input files.
 
