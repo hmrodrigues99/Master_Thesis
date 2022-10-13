@@ -5,7 +5,7 @@ outdir <- "C:/Users/Hugo Rodrigues/Documents/Module_Analysis/"
 
 #Reading the output dataframe of InfoMap and the dataframe with the homology link between Quercus LOC and Arabidopsis AT genes
 df_LOC_Comunity <- read.csv(file="C:/Users/Hugo Rodrigues/Documents/Module_Analysis/Cork/InfoMap_Clustering_Output/df_LOC_Comunity.txt", header=TRUE, sep=" ", comment.char = "#")
-df_quercus_thaliana <- read.csv(file="C:/Users/Hugo Rodrigues/Documents/Module_Analysis/new_quercus_linked_thaliana.txt", header=TRUE, sep="\t")
+df_quercus_thaliana <- read.csv(file="C:/Users/Hugo Rodrigues/Documents/Module_Analysis/quercus_arabidopsis_linked.txt", header=TRUE, sep="\t")
 #Reading the Cork network (cutoff at 0.4)
 Cork_Network_Node <- read.table("C:/Users//Hugo Rodrigues/Documents/Cork_network_bundle/DEG_Cork_SLOWP_network04_subset_node.csv", sep = ",", header=T)
 Genes_network <- Cork_Network_Node %>% select(name)
