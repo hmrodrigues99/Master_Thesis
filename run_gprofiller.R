@@ -5,7 +5,7 @@ outdir <- "C:/Users/Hugo Rodrigues/Documents/Module_Analysis/"
 
 #Reading the output dataframe of InfoMap and the dataframe with the homology link between Quercus LOC and Arabidopsis AT genes
 df_LOC_Comunity <- read.csv(file="C:/Users/Hugo Rodrigues/Documents/Module_Analysis/Cork/InfoMap_Clustering_Output/df_LOC_Comunity.txt", header=TRUE, sep=" ", comment.char = "#")
-df_quercus_thaliana <- read.csv(file="C:/Users/Hugo Rodrigues/Documents/Module_Analysis/new_quercus_linked_thaliana.txt", header=TRUE, sep="\t")
+df_quercus_thaliana <- read.csv(file="C:/Users/Hugo Rodrigues/Documents/Module_Analysis/quercus_arabidopsis_linked.txt", header=TRUE, sep="\t")
 #For some weird reason, removing the dot from the genes leads to an error in the g:Profiller run -_("-")_-
 #df_quercus_thaliana$Arabidopsis_gene <- gsub("\\.*", "", df_quercus_thaliana$Arabidopsis_gene)
 names(df_LOC_Comunity)[names(df_LOC_Comunity) == "name"] <- "Quercus_gene"
