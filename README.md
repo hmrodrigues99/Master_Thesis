@@ -40,7 +40,7 @@ The code pipeline is as follows:
 
 **network_hist.py** #Plot the distribution of the final correlation scores of the network
 
-**script_to_do** #the commands were simple and done in the shell (prov_name:qs_suber_arabidopsis_thaliana_link.sh) #Obtain a homoly link by blastp between Qs.suber and Ara.thaliana genes
+**quercus_blastp_arabidopsis_link.sh** #Obtain a sequence homology link by blastp between Quercus suber and Arabidopsis thaliana genes
 
 **blastp_results.py** #Process the blastp results to retain the best hits
 
