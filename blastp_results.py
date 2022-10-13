@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-blastp result post-processing
+Script used to process the blastp results, keeping only the highest quality quercus suber - arabidopsis thaliana homology link.
+Run arguments used: blastp_results(quercus_blastp_thaliana_link_top20.txt, quercus_arabidopsis)
 """
 
 import pandas as pd
@@ -14,7 +15,6 @@ def blastp_results(blastp_results, outname):
     df.columns = ['Quercus_gene', 'Arabidopsis_gene', 'alignment_len', 'query_len', 'subject_len', 'query_start', 'query_end', 'subject_s', 'subject_e', 'evalue']
     df_unduplicated = df.drop_duplicates(subset=['Quercus_gene'], keep='first')
     df_link = df_unduplicated[['Quercus_gene', 'Arabidopsis_gene']]
-    #print(df.shape)
     df_unduplicated.to_csv(outname+'.txt', sep="\t")
     df_link.to_csv(outname+'_linked.txt', sep="\t")
 
