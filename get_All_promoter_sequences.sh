@@ -3,10 +3,12 @@
 
 #Script used to excract promoter regions (1kb) of all genes within the GCN
 #Necessary inputs/files:
-# - annotation file with all cork oak genes from CorkOakDB webiste: GCF_002906115.1_CorkOak1.0_genomic.gff > CorkOak_genes.gff
-#Run command used: getPromoterRegions.sh ./GCF_002906115.1_CorkOak1.0_genomic.gff 1000
+# - annotation file with all cork oak genes from CorkOakDB website: GCF_002906115.1_CorkOak1.0_genomic.gff
+# - cork oak genome file (scafolds) from CorkOakDB website: GCF_002906115.1_CorkOak1.0_genomic.fna
+#Run command used: getPromoterRegions.sh ./GCF_002906115.1_CorkOak1.0_genomic.gff GCF_002906115.1_CorkOak1.0_genomic.fna 1000
+#Variable $1 should receive the annotationn file, $2 the genome file, and $3 the user-defined promoter region size
 
-#Getting a bed file with all cork oak genes (without trnas and mrnas)
+#Getting a bed file with all cork oak gene coordinates (start to finish, excluding trnas and mrnas)
 grep -P '\tgene\t' $1 > ./CorkOak_genes.gff
 awk '{print $1,$4,$5,$9,$7}' ./CorkOak_genes.gff > ./New_CorkOak_genes.gff
 sed 's/ID=gene-//g' ./New_CorkOak_genes.gff > ./New_CorkOak_genes2.gff
@@ -18,7 +20,7 @@ grep -P '\tregion\t' $1 > ./CorkOak_scafolds.gff
 awk '{print $1,$5}' ./CorkOak_scafolds.gff > ./CorkOak_scafolds.fa
 sed 's/ /\t/g' ./CorkOak_scafolds.fa > ./CorkOak_scafold_sizes.fa
 
-#Getting promoter regions of all genes with "$2" kb
+#Getting promoter region coordinates of all genes with "$3" kb
 grep '+' ./CorkOak_genes.bed > ./CorkOak_genes_p.bed
 bedtoolds flank -i ./CorkOak_genes_p.bed -g ./CorkOak_scafold_sizes.fa -l $2 -r 0 > ./CorkOak_promoters_1kb.bed
 grep '-' ./CorkOak_genes.bed > ./CorkOak_genes_n.bed
