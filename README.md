@@ -1,5 +1,5 @@
 # Master_Thesis
-#### Collection of custom scripts for the elaboration of my Master Thesis in Bioinformatics and Computational Biology, FCUL 2022, entitled "Identification of gene regulation modules that act in the interaction between cork development and environmental variables"
+#### Collection of custom scripts for the elaboration of my Master Thesis in Bioinformatics and Computational Biology, FCUL 2022, entitled "Identification of gene regulatory modules acting in the interaction between cork development and environmental variables"
 
 The code pipeline is as follows:
 
