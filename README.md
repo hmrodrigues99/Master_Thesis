@@ -3,7 +3,7 @@
 
 The code pipeline is as follows:
 
-### Task 1) RNA-seq data retrieval and preprocessing:
+### Task 1) RNA-seq data retrieval and preprocessing
 
 **multi_fastqdump.sh** #RNA-seq libraries retrieval
 
