@@ -20,7 +20,7 @@ dummy_meta <- data.frame(N = seq_along(Raw_Counts))
 dds <- DESeqDataSetFromMatrix(Raw_Counts, dummy_meta, ~1)
 
 #Pre-filtering - removing genes with low read counts ( < 10 )
-keep <- rowMeans(counts(dds)) >= 10
+keep <- rowSums(counts(dds)) >= 10
 dds <- dds[keep,]
 
 # Now we run variance stabilization and get the stabilized data as a matrix.
