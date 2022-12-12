@@ -23,12 +23,11 @@ The code pipeline is as follows:
 
 **log_featureCounts.sh** #Create log file of the featureCounts output of both star_script.sh and single_star_script.sh
 
-
 **log_final.sh** #Merge separate log files into a single one
 
 **raw_counts.R** #Data integration into a single global Dataset
 
-**raw_counts_normalization_seidr.R** #Data normalization and prepare input into seidr
+**raw_counts_normalization_seidr.R** (Incorporated into seidr_script.sh) #Data normalization and prepare input into seidr
 
 ### Task 2) Prediciton and analysis of the gene co-expression network
 
