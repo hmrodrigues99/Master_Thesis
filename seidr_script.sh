@@ -170,7 +170,7 @@ mkdir -p $outdir
 
 #This script receives a Raw_Counts.txt and outputs an expression.tsv and a genes.txt file to the specified outdir.
 #These two files are the base material for all calculus for the Seidr crowd network generation toolkit.
-Cork_seidr.R --rawcountsfile $rawcountsfile --output $outdir
+raw_counts_normalization_seidr.R --rawcountsfile $rawcountsfile --output $outdir
 
 printf "\n\n | --------------------- Started computation with $thread threads and a $depth depth ---------------------- |\n\n"
 
