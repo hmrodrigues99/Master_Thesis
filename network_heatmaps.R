@@ -192,6 +192,37 @@ All_clusters <- rbind(cluster_1, cluster_2, cluster_3, cluster_4, cluster_5)
 All_clusters_Heatmap <- subset(All_clusters, select = -c(name, Module, Flow))
 Heatmap(All_clusters_Heatmap, name = "drought_expression", split = All_clusters$Module, column_title = "Samples", show_row_names = FALSE)
 
+#Plot New Heatmaps with New Labels
+old_names <- colnames(cluster_1)
+Project = c(rep("PRJNA690098", 28), rep("PRJNA650215", 11), rep("PRJ_stems2021", 18), rep("PRJNA347903", 4), rep("PRJNA392919", 4), rep("PRJEB33874", 9))
+Tissue = c(rep(c("ARoot","ARoot","ARoot","CRoot","CRoot","CRoot"), 3), c("ARoot", "CRoot","ARoot", "ARoot", "ARoot", "CRoot", "CRoot", "CRoot", "ARoot", "CRoot"), rep("Cork", 11), rep(c("Cork", "Innerbark", "Xylem"), 6), rep("Embryo", 4), c("Cork","Xylem","Leaf","Innerbark"), rep("Cork", 6), rep("Xylem", 3))
+new_names_df <- data.frame(row.names = old_names, Project, Tissue, stringsAsFactors = TRUE)
+new_names_df$new_names <- paste(new_names_df$Project,"-", new_names_df$Tissue)
+colnames(cluster_1) <- new_names_df$new_names
+colnames(cluster_2) <- new_names_df$new_names
+colnames(cluster_3) <- new_names_df$new_names
+colnames(cluster_4) <- new_names_df$new_names
+colnames(cluster_5) <- new_names_df$new_names
+
+#Plot and Save new Heatmaps highlighting the first Division
+cluster_1 <- as.matrix(cluster_1)
+pdf("C:/Users/Hugo Rodrigues/Documents/R/Heatmaps/H1_pdf.pdf", width = 9, height = 8, bg = "white", paper = "A4")
+Heatmap(cluster_1, name = "Z-Score", column_title = "RNA-seq libraries", row_title = "Module 1", show_row_names = FALSE, column_names_gp = gpar(fontsize = 7), top_annotation = HeatmapAnnotation(foo = anno_block(gp = gpar(fill = 2:4), labels = c("Phellem", "Others"), labels_gp = gpar(col = "white", fontize = 10))), column_km = 2)
+dev.off()
+#ggsave(filename = "H1_gg2", path = "C:/Users/Hugo Rodrigues/Documents/R/Heatmaps/", device = "pdf", width = 185, height = 272, units = "mm", dpi = 300)
+cluster_2 <- as.matrix(cluster_2)
+pdf("C:/Users/Hugo Rodrigues/Documents/R/Heatmaps/H2_pdf.pdf", width = 9, height = 8, bg = "white", paper = "A4")
+Heatmap(cluster_2, name = "Z-Score", column_title = "RNA-seq libraries", row_title = "Module 2", show_row_names = FALSE, column_names_gp = gpar(fontsize = 7), top_annotation = HeatmapAnnotation(foo = anno_block(gp = gpar(fill = 2:4), labels = c("Others", "Young Root/Embryo"), labels_gp = gpar(col = "white", fontize = 10))), column_km = 2)
+dev.off()
+cluster_3 <- as.matrix(cluster_3)
+pdf("C:/Users/Hugo Rodrigues/Documents/R/Heatmaps/H3_pdf.pdf", width = 9, height = 8, bg = "white", paper = "A4")
+Heatmap(cluster_3, name = "Z-Score", column_title = "RNA-seq libraries", row_title = "Module 3", show_row_names = FALSE, column_names_gp = gpar(fontsize = 7), top_annotation = HeatmapAnnotation(foo = anno_block(gp = gpar(fill = 2:4), labels = c("Young Stem Tissues", "Others"), labels_gp = gpar(col = "white", fontize = 10))), column_km = 2)
+dev.off()
+cluster_4 <- as.matrix(cluster_4)
+pdf("C:/Users/Hugo Rodrigues/Documents/R/Heatmaps/H4_pdf.pdf", width = 9, height = 8, bg = "white", paper = "A4")
+Heatmap(cluster_4, name = "Z-Score", column_title = "RNA-seq libraries", row_title = "Module 4", show_row_names = FALSE, column_names_gp = gpar(fontsize = 7), top_annotation = HeatmapAnnotation(foo = anno_block(gp = gpar(fill = 2:4), labels = c("Others", "Roots"), labels_gp = gpar(col = "white", fontize = 10))), column_km = 2)
+dev.off()
+
 #Obtain Clusters of genes for the Drought project samples
 cluster_1 <- Module_1 %>% inner_join(DStems_Means_Zscore,by="name")
 row.names(cluster_1) <- cluster_1$name
