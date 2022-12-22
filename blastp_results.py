@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-Script used to process the blastp results, keeping only the highest quality quercus suber - arabidopsis thaliana homology link.
-Run arguments used: blastp_results(quercus_blastp_thaliana_link_top20.txt, quercus_arabidopsis)
+Script used to process the blastp results obtained from the quercus_blastp_arabidopsis.sh script.
+Keeps only the highest quality (lower evalue) quercus suber - arabidopsis thaliana homology link.
+Run arguments used during the Master's work: blastp_results(quercus_blastp_thaliana_link_top20.txt, quercus_arabidopsis)
+The output file (e.g. quercus_link_thaliana.txt) should be imported in Cytoscape as a node table.
+This will add the Arabidopsis IDs to the respective Quercus suber genes (using as key column: Quercus_gene)
 """
 
 import pandas as pd
