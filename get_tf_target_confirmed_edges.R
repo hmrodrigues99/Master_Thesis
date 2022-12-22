@@ -15,7 +15,7 @@ df_node_at <- read.csv(file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/Cork
 df_node_at <- df_node_at[!apply(df_node_at, 1, function(x) any(x=="")),] 
 df_new_node_at <- df_node_at %>% separate(Arabidopsis_gene, c("Arabidopsis_concise", "temp"), remove = FALSE)
 df_new_node_at <- subset(df_new_node_at, select = c("name", "Arabidopsis_gene", "Arabidopsis_concise"))
-#This will output a .txt file to be imported as a node table into Cytoscape, and add the new Arabidopsis_concise column (use as key column the Arabidopsis_gene column).
+#This will output a .txt file to be imported as a node table into Cytoscape, and add the new Arabidopsis_concise column (use as key column the name column).
 write.table(df_new_node_at, file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/arabidopsis_concise.txt", row.names = FALSE, quote = FALSE, sep = "\t")
 
 #Getting the Input Network ready to query in ConnectTF -> from "LOC edge LOC" to "AT edge AT" format
