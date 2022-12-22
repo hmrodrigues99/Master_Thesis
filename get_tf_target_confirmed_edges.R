@@ -2,17 +2,20 @@
 #Inputs
 #1) Network node table and edge table from Cytoscape
 #2) ConnecTF database network
-#3) File with the homology link between Qs.suber genes and Ara.thaliana genes. 2 columns (ex: LOC123 AT123)
+#3) File with the homology link between the species of interest (in my case Qs.suber) genes and Arabidopsis thaliana genes.
+# My work obtained this homology link (quercus_link_thaliana.txt) from a blastp using the quercus_blastp_arabisopsis_link.sh script.
 
 library(dplyr)
 library(tidyr)
 
-#Piece of code used once to get the column with the Arabidopsis IDs into a condensed version
-#Passing column of AT1G123.1 genes to AT1G123
+#RUN THE FOLLOWING LINES ONCE!
+#Code used once to get the column with the Arabidopsis IDs into a condensed version (from AT1G123.1 to AT1G123 genes)
+#Change the directory here for the Network node table
 #df_node_at <- read.csv(file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/Cork_network04_TF_node.csv", header = TRUE, sep=",")
 #df_node_at <- df_node_at[!apply(df_node_at, 1, function(x) any(x=="")),] 
 #df_new_node_at <- df_node_at %>% separate(Arabidopsis_gene, c("Arabidopsis_concise", "temp"), remove = FALSE)
 #df_new_node_at <- subset(df_new_node_at, select = c("name", "Arabidopsis_gene", "Arabidopsis_concise"))
+#This will output a .txt file to be imported as a node table into Cytoscape, and add the new Arabidopsis_concise column (use as key column the Arabidopsis_gene column).
 #write.table(df_new_node_at, file = "C:/Users/Hugo Rodrigues/Documents/TF_Targets/arabidopsis_concise.txt", row.names = FALSE, quote = FALSE, sep = "\t")
 
 #Getting the Input Network ready to query in ConnectTF -> from "LOC edge LOC" to "AT edge AT" format
