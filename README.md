@@ -25,9 +25,9 @@ The code pipeline is as follows:
 
 **log_final.sh** #Merge separate log files into a single one
 
-**raw_counts.R** #Data integration into a single global Dataset
+**Raw_Counts.R** #Data integration into a single global Dataset
 
-**raw_counts_normalization_seidr.R** (Incorporated into seidr_script.sh) #Data normalization and prepare input into seidr
+**Raw_Counts_normalization.R** (Incorporated into seidr_script.sh) #Data normalization and prepare input into seidr
 
 ### Task 2) Prediciton and analysis of the gene co-expression network
 
