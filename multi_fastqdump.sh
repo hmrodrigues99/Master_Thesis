@@ -2,7 +2,7 @@
 
 '''
 General Use
-This script, in conjunction with multi_fastqdump.sh, performs the download from NCBI of RNA-seq libraries by their BioProject accession ID and SRA run codes.
+This script, in conjunction with fastqdump.sh, performs the download from NCBI of RNA-seq libraries by their BioProject accession ID and SRA run codes.
 Inputs:
 1) A list of BioProject accession IDs stored into NCBI (ex: PRJNA392919), one ID per line.
 Outputs:
