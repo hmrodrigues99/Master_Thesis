@@ -59,7 +59,7 @@ The code pipeline is as follows:
 
 ### Task 3) Identification and analysis of Transcription Factors and putative targets of interest within the network
 
-**Get_TF_Target_Confirmed_Edges.R** #Overlaps the ConnecTF database interactions with network predicted interactions to return commonly ocurrying interactions
+**simple_ConnecTF.R** #Overlaps the ConnecTF database interactions with network predicted interactions to return commonly ocurrying interactions
 
 **tf_target_information.py** #Summarize information of network TFs and the genes which they interact with
 
